@@ -5,26 +5,25 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foguis</title>
+    <title>Foguete</title>
     <style>
         body {
             width: 100%;
-            height: 100vh;
-            background-image: linear-gradient(0deg, lightblue, darkblue);
+            height: 140vh;
             overflow: hidden;
+            background-image: linear-gradient(180deg, rgb(160, 99, 184), rgb(103, 151, 191));
         }
 
         .foguete {
             position: absolute;
-            top: 700px;
+            top: 550px;
             left: 750px;
         }
 
         .lua {
             position: absolute;
-            top: 650px;
-            left: 490px;
-
+            top: 550px;
+            left: 640px;
         }
 
         .nome {
@@ -37,105 +36,91 @@
 </head>
 
 <body>
-    <img src="lua.png" class="lua">
-    <img id="foguete" src="foguete.gif" width="80px" class="foguete">
-    <audio id="audioContagem" src="contagem_regressiva.mp3"></audio>
-    <audio id="audioSubir" src="lancamento_foguete.mp3"></audio>
-    <audio id="audioDescer" src="houston_problem.mp3"></audio>
+    <img src="lua.png" id="lua" width="300px" class="lua">
+    <img src="foguete.gif" onclick="Comecar();" id="foguete" width="80px" class="foguete">
     <div class="nome">Eduarda Warmeling Medeiros</div>
+    
+</body>
+<script src="jquery-3.7.0.min.js"></script>
+<script>
+
+    function Comecar() {
+        var audio = new Audio('subir.mp3');
+        var audio2 = new Audio('lancamento_foguete.mp3');
+        var audio3 = new Audio('descer.mp3');
+
+        function playAudio() {
+            audio.play();
+        }
+        setTimeout(playAudio, 500)
+
+        function playAudio2() {
+            audio2.play();
+        }
+        setTimeout(playAudio2, 15000)
+
+        function pausarAudio() {
+            audio.pause()
+        }
+        setTimeout(pausarAudio, 15000)
+
+        function pausarAudio2() {
+            audio2.pause()
+        }
+        setTimeout(pausarAudio2, 22000)
+
+        function playAudio3() {
+            audio3.play();
+        }
+        setTimeout(playAudio3, 22000)
 
 
-
-    <script src="jquery-3.7.0.min.js"></script>
-    <script>
-        data = new Date();
-        tempo_inicial = data.getTime();
-
-
-        var audio = new Audio('lancamento_foguete.mp3')
-        var audioContagem = document.getElementById("audioContagem");
-        var audioSubir = document.getElementById("audioSubir");
-        var audioDescer = document.getElementById("audioDescer");
+        data = new Date()
+        tempo_inicial = data.getTime()
 
         document.onkeydown = Pega_Tecla;
-        document.addEventListener("click", TocarContagem);
-        document.addEventListener("click", TocarSubir);
-        document.addEventListener("click", TocarDescer);
-
-
         function Pega_Tecla(e) {
             e = e || window.event;
+
             tecla = e.keyCode;
             console.log(tecla); // MOSTRA O CÓDIGO DA TECLA PRESSIONADA
 
-            data = new Date();
-            tempo_final = data.getTime();
+            data = new Date()
+            tempo_final = data.getTime()
 
             if (tempo_final - tempo_inicial > 1000) {
-                tempo_inicial = tempo_final;
-
+                tempo_inicial = tempo_final
                 if (tecla == 37) {
-                    x = x - 20;
+                    x = x - 20
                 }
                 if (tecla == 39) {
-                    x = x + 20;
+                    x = x + 20
                 }
             }
         }
 
-        var temporizador = setTimeout(Subir, 1000);
-        var x = 750;
-        var y = 10;
-        var TOPO = "";
-        var ESQUERDA = "";
+        teleporizador = setTimeout(Subir, 15000)
+        x = 750;
+        y = 100;
+        TOPO = "";
+        esquerda = "";
 
         function Subir() {
             TOPO = y + "px";
-            $("#foguete").animate({ top: TOPO }, 1000);
-            temporizador = null;
-            temporizador = setInterval(Descer, 1000);
+            $("#foguete").animate({ top: TOPO }, 7000)
+            temporizador = null
+            temporizador = setInterval(Descer, 1000)
         }
-
         function Descer() {
-            y = y + 100;
-            if (y > 700) {
-                y = 700;
+            y = y + 25
+            TOPO = y + "px"
+            esquerda = x + "px"
+            $("#foguete").animate({ left: esquerda, top: TOPO }, 1000)
+            if (y > 520) {
+                y = 520;
             }
-            TOPO = y + "px";
-            ESQUERDA = x + "px";
-            $("#foguete").animate({ left: ESQUERDA, top: TOPO }, 1000);
         }
-
-        function TocarContagem() {
-            audio.play();
-        }
-
-        function TocarSubir() {
-            audio.play();
-
-        }
-
-        function TocarDescer() {
-            audio.play();
-
-        }
-
-        function PararAudio() {
-            audio.pause();
-        }
-        setTimeout(TocarContagem, 1000)
-
-        function PararAudio() {
-            audio.pause();
-        }
-        setTimeout(TocarSubir, 2000)
-
-        function PararAudio() {
-            audio.pause();
-        }
-        setTimeout(TocarDescer, 3000)
-
-    </script>
-</body>
+    }
+</script>
 
 </html>
